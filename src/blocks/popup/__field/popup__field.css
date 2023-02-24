@@ -1,0 +1,12 @@
+.popup__field {
+    margin: 0;
+    padding: 0 0 13px;
+    font-weight: 400px;
+    font-size: 14px;
+    line-height: 17px;
+    font-style: normal;
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
+    color: #000;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}

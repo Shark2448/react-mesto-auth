@@ -1,0 +1,19 @@
+.card {
+    position: relative;
+    background: #FFF;
+    border-radius: 10px;
+    max-width: 282px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.card:last-child {
+    margin-bottom: 0;
+}
+
+@media screen and (min-width: 600px) {
+    .card {
+        margin: 0;
+        padding: 0;
+    }
+}
