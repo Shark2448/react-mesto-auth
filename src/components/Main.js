@@ -47,8 +47,8 @@ function Main({
         {cards.map((card) => (
           <Card
           card={card}
-          onCardClick={onCardClick} />
-          
+          key={card._id}
+          onCardClick={onCardClick} />     
         ))}
       </section>  
     </main>
