@@ -40,7 +40,7 @@ function App() {
     .catch((err) => {
       console.log(err);
     })
-  })
+  }, [])
 
   const  handleEditAvatarClick = () => {
     setEditAvatarPopupOpen(true);
