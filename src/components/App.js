@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header.js";
 import Main from "./Main.js";
-import Card from "./Card.js";
 import Footer from "./Footer.js";
 import PopupWithForm from "./PopupWithForm.js";
 import { api } from "../utils/Api.js";
@@ -94,6 +93,18 @@ function App() {
       });
   }
 
+  function handleUpdateAvatar(data) {
+    api
+      .changeUserAvatar(data)
+      .then((res) => {
+        setCurrentUser(res);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   function closeAllPopups() {
     setEditAvatarPopupOpen(false);
     setEditProfilePopupOpen(false);
@@ -120,6 +131,7 @@ function App() {
           <EditAvatarPopup
             isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
+            onUpdateAvatar={handleUpdateAvatar}
           />
           <PopupWithForm
             title="Новое место"
