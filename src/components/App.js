@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import Header from "./Header.js";
 import Main from "./Main.js";
 import Footer from "./Footer.js";
-import PopupWithForm from "./PopupWithForm.js";
 import { api } from "../utils/Api.js";
 import ImagePopup from "./ImagePopup.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 import EditProfilePopup from "./EditProfilePopup.js";
 import EditAvatarPopup from "./EditAvatarPopup.js";
+import AddPlacePopup from "./AddPlacePopup.js";
 
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
@@ -17,6 +17,20 @@ function App() {
   const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({});
+
+  function useFormValidation() {
+    const [values, setValues] = useState({});
+    const [errors, setErrors] = useState({});
+    const [isValid, setIsValid] = useState(false);
+
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setValues({ ...values, [name]: value });
+      setErrors({ ...errors, [name]:  })
+    }
+
+    return { handleChange }
+  }
 
   useEffect(() => {
     api
@@ -105,6 +119,18 @@ function App() {
       });
   }
 
+  function handleAddPlaceSubmit(data) {
+    api
+      .createNewCard(data)
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
   function closeAllPopups() {
     setEditAvatarPopupOpen(false);
     setEditProfilePopupOpen(false);
@@ -133,33 +159,10 @@ function App() {
             onClose={closeAllPopups}
             onUpdateAvatar={handleUpdateAvatar}
           />
-          <PopupWithForm
-            title="Новое место"
-            name="card"
-            isOpen={isAddPlacePopupOpen}
-            onClose={closeAllPopups}
-            children={
-              <>
-                <input
-                  name="cardName"
-                  type="text"
-                  className="popup__field popup__field_card_name"
-                  placeholder="Название"
-                  minLength="2"
-                  maxLength="30"
-                  required
-                />
-                <span className="cardName-error popup__error-text"></span>
-                <input
-                  name="cardLink"
-                  type="url"
-                  className="popup__field popup__field_card_link"
-                  placeholder="Ссылка на картинку"
-                  required
-                />
-                <span className="cardLink-error popup__error-text"></span>
-              </>
-            }
+          <AddPlacePopup
+            isOpen={isAddPlacePopupOpen} 
+            onClose={closeAllPopups}  
+            onAddPlace={handleAddPlaceSubmit}
           />
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
