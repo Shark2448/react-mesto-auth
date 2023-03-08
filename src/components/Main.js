@@ -9,7 +9,8 @@ function Main({
   onCardClick,
   onCardLike,
   onCardDelete,
-  cards
+  cards,
+  setCard
 }) {
   const currentUser = useContext(CurrentUserContext);
 
@@ -35,17 +36,6 @@ function Main({
           onClick={onAddPlace}
         ></button>
       </section>
-      <section className="popup popup_confirm">
-        <div className="popup__container">
-          <button type="button" className="popup__close-button"></button>
-          <h2 className="popup__title">Вы уверены?</h2>
-          <form className="popup__confirm-form" name="confirm-form">
-            <button type="submit" className="popup__confirm-button">
-              Да
-            </button>
-          </form>
-        </div>
-      </section>
       <section className="photo-cards">
         {cards.map((card) => (
           <Card
@@ -53,7 +43,8 @@ function Main({
           key={card._id}
           onCardClick={onCardClick}
           onCardLike={onCardLike}
-          onCardDelete={onCardDelete} />     
+          onCardDelete={onCardDelete}
+          setCard={setCard} />     
         ))}
       </section>  
     </main>
