@@ -12,7 +12,6 @@ function PopupWithForm({ title, name, children, isOpen, onClose, onSubmit, butto
           className={`popup__${name}-form`}
           name={`${name}-form`}
           onSubmit={onSubmit}
-          noValidate
         >
           {children}
           <button type="submit" className="popup__save-button">

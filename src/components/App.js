@@ -11,15 +11,36 @@ import AddPlacePopup from "./AddPlacePopup.js";
 import DeleteCardPopup from "./DeleteCardPopup.js";
 
 function App() {
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
-  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
-  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
-  const [isDeleteCardPopupOpen, setDeleteCardPopupOpen] = useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [card, setCard] = useState(null);
   const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({});
+
+  const isOpen = 
+  isEditAvatarPopupOpen ||
+  isEditProfilePopupOpen ||
+  isAddPlacePopupOpen ||
+  selectedCard.link
+
+  useEffect(() => {
+    function closeByEscape(e) {
+      if(e.key === 'Escape') {
+        closeAllPopups();
+      }
+    }
+    if(isOpen) {
+      document.addEventListener('keydown', closeByEscape);
+      return () => {
+        document.removeEventListener('keydown', closeByEscape);
+      }
+    }
+  }, [isOpen])
 
   useEffect(() => {
     api
@@ -44,20 +65,20 @@ function App() {
   }, []);
 
   const handleEditAvatarClick = () => {
-    setEditAvatarPopupOpen(true);
+    setIsEditAvatarPopupOpen(true);
   };
 
   const handleEditProfileClick = () => {
-    setEditProfilePopupOpen(true);
+    setIsEditProfilePopupOpen(true);
   };
 
   const handleAddPlaceClick = () => {
-    setAddPlacePopupOpen(true);
+    setIsAddPlacePopupOpen(true);
   };
 
   const handleCardDeleteClick = (card) => {
     setCard(card)
-    setDeleteCardPopupOpen(true);
+    setIsDeleteCardPopupOpen(true);
   };
 
   function handleCardLike(card) {
@@ -91,6 +112,7 @@ function App() {
   }
 
   function handleUpdateUser(data) {
+    setIsLoading(true);
     api
       .changeUserInfo(data)
       .then((res) => {
@@ -99,10 +121,14 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-      });
+      })
+      .finnaly(() => {
+        setIsLoading(false);
+      })
   }
 
   function handleUpdateAvatar(data) {
+    setIsLoading(true);
     api
       .changeUserAvatar(data)
       .then((res) => {
@@ -111,10 +137,14 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-      });
+      })
+      .finnaly(() => {
+        setIsLoading(false);
+      })
   }
 
   function handleAddPlaceSubmit(data) {
+    setIsLoading(true);
     api
       .createNewCard(data)
       .then((newCard) => {
@@ -124,18 +154,21 @@ function App() {
       .catch((err) => {
         console.log(err)
       })
+      .finnaly(() => {
+        setIsLoading(false);
+      })
   }
 
   function closeAllPopups() {
-    setEditAvatarPopupOpen(false);
-    setEditProfilePopupOpen(false);
-    setAddPlacePopupOpen(false);
-    setDeleteCardPopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setIsDeleteCardPopupOpen(false);
     setSelectedCard({});
   }
 
   return (
-    <body className="page">
+    <div className="page">
       <div className="page__container">
         <CurrentUserContext.Provider value={currentUser}>
           <Header />
@@ -155,16 +188,19 @@ function App() {
             isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
             onUpdateAvatar={handleUpdateAvatar}
+            isLoading={isLoading}
           />
           <AddPlacePopup
             isOpen={isAddPlacePopupOpen} 
             onClose={closeAllPopups}  
             onAddPlace={handleAddPlaceSubmit}
+            isLoading={isLoading}
           />
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
             onUpdateUser={handleUpdateUser}
+            isLoading={isLoading}
           />
           <DeleteCardPopup
             isOpen={isDeleteCardPopupOpen}
@@ -174,7 +210,7 @@ function App() {
           />
         </CurrentUserContext.Provider>
       </div>
-    </body>
+    </div>
   );
 }
 

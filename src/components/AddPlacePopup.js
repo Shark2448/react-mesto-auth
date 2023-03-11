@@ -1,12 +1,9 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import PopupWithForm from "./PopupWithForm";
 
-function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
+function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading }) {
   const [cardName, setCardName] = useState("");
   const [cardLink, setCardLink] = useState("");
-
-  const cardNameRef = useRef();
-  const cardLinkRef = useRef();
 
   function handleCardName(e) {
     setCardName(e.target.value);
@@ -19,8 +16,8 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
   function handleSubmit(e) {
     e.preventDefault();
     onAddPlace({
-      name: cardNameRef.current.value,
-      link: cardLinkRef.current.value,
+      name: cardName,
+      link: cardLink,
     });
   }
 
@@ -31,36 +28,28 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
-      buttonText="Сохранить"
-      children={
-        <>
-          <input
-            name="cardName"
-            type="text"
-            className="popup__field popup__field_card_name"
-            ref={cardNameRef}
-            value={cardName}
-            onChange={handleCardName}
-            placeholder="Название"
-            minLength="2"
-            maxLength="30"
-            required
-          />
-          <span className="cardName-error popup__error-text"></span>
-          <input
-            name="cardLink"
-            type="url"
-            className="popup__field popup__field_card_link"
-            ref={cardLinkRef}
-            value={cardLink}
-            onChange={handleCardLink}
-            placeholder="Ссылка на картинку"
-            required
-          />
-          <span className="cardLink-error popup__error-text"></span>
-        </>
-      }
-    />
+      buttonText={isLoading ? "Сохранение..." : "Сохранить"}
+    >
+      <input
+        name="cardName"
+        type="text"
+        className="popup__field popup__field_card_name"
+        value={cardName}
+        onChange={handleCardName}
+        placeholder="Название"
+      />
+      <span className="cardName-error popup__error-text"></span>
+      <input
+        name="cardLink"
+        type="url"
+        className="popup__field popup__field_card_link"
+        value={cardLink}
+        onChange={handleCardLink}
+        placeholder="Ссылка на картинку"
+        required
+      />
+      <span className="cardLink-error popup__error-text"></span>
+    </PopupWithForm>
   );
 }
 

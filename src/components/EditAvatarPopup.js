@@ -1,12 +1,7 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import PopupWithForm from "./PopupWithForm";
 
-function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
-    const [avatar, setAvatar] = useState('');
-
-    function handleChangeAvatarLink(e) {
-        setAvatar(e.target.value);
-    }
+function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading }) {
 
     const avatarRef = useRef();
 
@@ -24,15 +19,13 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
             isOpen={isOpen}
             onClose={onClose}
             onSubmit={handleSubmit}
-            buttonText="Сохранить"
+            buttonText={isLoading ? "Сохранение..." : "Сохранить"}
             children={
               <>
                 <input
                   type="url"
                   name="avatarLink"
                   className="popup__field popup__field_avatar_link"
-                  value={avatar}
-                  onChange={handleChangeAvatarLink}
                   ref={avatarRef}
                   placeholder="Ссылка на картинку"
                   required
