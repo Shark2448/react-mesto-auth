@@ -122,7 +122,7 @@ function App() {
       .catch((err) => {
         console.log(err);
       })
-      .finnaly(() => {
+      .finally(() => {
         setIsLoading(false);
       })
   }
@@ -138,7 +138,7 @@ function App() {
       .catch((err) => {
         console.log(err);
       })
-      .finnaly(() => {
+      .finally(() => {
         setIsLoading(false);
       })
   }
@@ -154,7 +154,7 @@ function App() {
       .catch((err) => {
         console.log(err)
       })
-      .finnaly(() => {
+      .finally(() => {
         setIsLoading(false);
       })
   }
