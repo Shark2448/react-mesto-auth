@@ -1,0 +1,12 @@
+.authorizForm__input {
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFF;
+    background-color: #000;
+    border: none;
+    border-bottom: 2px solid #CCC;
+    min-height: 27px;
+}

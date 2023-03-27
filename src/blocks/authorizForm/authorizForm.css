@@ -1,0 +1,7 @@
+.authorizForm {
+    width: 358px;
+    margin: 60px auto 0 auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}

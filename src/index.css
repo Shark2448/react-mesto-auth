@@ -51,3 +51,17 @@
 @import url(./blocks/popup/__error-text/popup__error-text.css);
 @import url(./blocks/popup/__save-button/_disabled/popup__save-button_disabled.css);
 @import url(./blocks/popup/__error-text/popup__error-text_border.css);
+@import url(./blocks/authorizForm/authorizForm.css);
+@import url(./blocks/authorizForm/__title/authorizForm__title.css);
+@import url(./blocks/authorizForm/__input/authorizForm__input.css);
+@import url(./blocks/authorizForm/__input/_email/authorizForm__input_email.css);
+@import url(./blocks/authorizForm/__input/_password/authorizForm__input_password.css);
+@import url(./blocks/authorizForm/__button/authorizForm__button.css);
+@import url(./blocks/authorizForm/__link/authorizForm__link.css);
+@import url(./blocks/header/__case/header__case.css);
+@import url(./blocks/header/__email/header__email.css);
+@import url(./blocks/header/__link/header__link.css);
+@import url(./blocks/header/__link/_authoriz/header__link_authroriz.css);
+@import url(./blocks/popup/__container/_infoTooltip/popup__container_infoTooltip.css);
+@import url(./blocks/popup/__title/_infoTooltip/popup__title_infoTooltip.css);
+@import url(./blocks/popup/__infoimage/popup__infoimage.css);
