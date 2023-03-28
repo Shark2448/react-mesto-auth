@@ -210,6 +210,8 @@ function App() {
         history.push('/');
       })
       .catch((err) => {
+        setIsInfoTooltipOk(false);
+        setIsInfoTooltip(true);
         console.log(err);
       });
   }
